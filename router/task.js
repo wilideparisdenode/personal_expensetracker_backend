@@ -38,8 +38,16 @@ router.put('/:id', auth, async (req, res) => {
 
 // Delete task
 router.delete('/:id', auth, async (req, res) => {
-  await Task.findByIdAndDelete(req.params.id);
-  res.send('Task deleted');
+  try {
+    console.log( "the id of the task is "+req.params.id);
+      const task = await Task.findByIdAndDelete(req.params.id);
+      if (!task) {
+          return res.status(404).json({ message: 'Task not found' });
+      }
+      res.status(200).json( task );
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
 });
 
 module.exports = router;
