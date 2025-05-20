@@ -24,8 +24,8 @@ router.get('/', auth, async (req, res) => {
 
 // Create task
 router.post('/', auth, async (req, res) => {
-  const { title, description } = req.body;
-  const newTask = new Task({ title, description, userId: req.user.id });
+  const { title, description,category } = req.body;
+  const newTask = new Task({ title, description,category, userId: req.user.id });
   await newTask.save();
   res.status(201).json(newTask);
 });
